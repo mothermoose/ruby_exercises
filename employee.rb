@@ -1,10 +1,10 @@
-employee_1 = {:first_name => "Jim", :last_name => "jefferies" , :salary => 70000, :active => true} 
-
-employee_2 = {first_name: "maria", last_name: "bamford" , salary: 80000, active: true}
-
-
-puts "#{employee_1[:first_name]} #{employee_1[:last_name]} makes #{employee_1[:salary]} a year."
-puts "#{employee_2[:first_name]} #{employee_2[:last_name]} makes #{employee_2[:salary]} a year."
+module Reporting
+ def send report
+   puts "Sending email..."
+   # the code to send report
+   puts "Email Sent."
+ end 
+end
 
 class Employee
   attr_reader :first_name, :last_name, :salary, :active
@@ -14,7 +14,7 @@ class Employee
     @first_name = input_options[:first_name]
     @last_name = input_options[:last_name]
     @salary = input_options[:salary]
-    @active = input_opitions[:active]
+    @active = input_options[:active]
   end
 
   def print_info
@@ -26,15 +26,51 @@ class Employee
   end
 end
 
+class Manager < Employee
+include Reporting
+  def initialize(input_options) 
+    super(input_options)
+    @employees = input_options[:employees]
+  end
+
+ def send_report
+   puts "Sending email..."
+   # the code to send report
+   puts "Email Sent."
+ end 
+
+ def annual_raise
+  @salary *= 1.05
+  end 
+end
+
 employee_1 = Employee.new(
                           first_name: "Jim",
                           last_name: "Jefferies", 
                           salary: 70000, 
                           active: true
                          )
-employee_2 = Employee.new("Maria", "Bamford", 80000, true)
+manager = Manager.new(
+                      first_name: "Patton",
+                      last_name: "Oswalt",
+                      salary: 100000,
+                      active: true
+                      )
 
-puts employee_1.active
-employee_1.active = false
-puts employee_1.active
+class Intern < Employee
+ include Reporting 
+  def send_report
+    puts "Sending email..."
+    #soemthing here
+    puts "Email sent!"
+  end 
+end 
 
+intern = Intern.new(
+  first_name: "Jimmy",
+  last_name: "Olsen",
+  salary: 150000,
+  active: true
+)
+
+ puts manager.last_name
